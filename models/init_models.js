@@ -29,10 +29,10 @@ const initModels = (sequelize, DataTypes) => {
   });
   // relationship between students and tournaments
   students.belongsTo(tournaments, {
-    foreignKey: { allowNull: false, name: "tournament_id" },
+    foreignKey: { name: "tournament_id" },
   });
   tournaments.hasMany(students, {
-    foreignKey: { allowNull: false, name: "tournament_id" },
+    foreignKey: { name: "tournament_id" },
   });
   // hostels and tournaments
   hostels.belongsToMany(tournaments, {

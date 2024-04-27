@@ -4,7 +4,7 @@ const catchAsync = require("../utils/catchAsync");
 const { hostels } = db.models;
 
 const getHostel = catchAsync(async (_, res) => {
-  const data = await hostels.find();
+  const data = await hostels.findAll();
   res.send(data);
 });
 
