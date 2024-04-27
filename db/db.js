@@ -2,8 +2,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 const { connection_string } = require("../utils/config");
 const initModels = require("../models/init_models");
 
-const sequelize = new Sequelize(connection_string);
-
+const sequelize = new Sequelize(connection_string, { logging: false });
 try {
   sequelize
     .authenticate()
