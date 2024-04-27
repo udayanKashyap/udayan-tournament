@@ -4,9 +4,12 @@ module.exports = function (sequelize, DataTypes) {
     {
       password: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
       username: {
         type: DataTypes.STRING,
+        allowNull: false,
+        primaryKey: true,
       },
     },
     {

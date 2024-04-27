@@ -4,12 +4,14 @@ module.exports = function (sequelize, DataTypes) {
     {
       name: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
       boarders: {
         type: DataTypes.INTEGER,
       },
       password: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
     },
     {
