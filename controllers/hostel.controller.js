@@ -5,9 +5,6 @@ const { hostels } = db.models;
 
 const getHostel = catchAsync(async (_, res) => {
   const data = await hostels.find();
-  if (data.length < 5) {
-    throw new ApiError(404, "Not found");
-  }
   res.send(data);
 });
 
