@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const hostelRouter = require("./routes/hostel.route");
+const errorHandler = require("./utils/errorHandler");
 
 // middlewares
 app.use(express.json());
@@ -13,7 +14,8 @@ app.use(
 app.use(cors());
 //routes
 app.use("/hostel", hostelRouter);
-
+//error handler
+app.use(errorHandler);
 app.listen(8000, () => {
   console.log("server running at http://localhost:8000 🔥");
 });
