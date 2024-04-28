@@ -1,7 +1,8 @@
+const { where, Op } = require("sequelize");
 const db = require("../db/db");
 const ApiError = require("../utils/apiError");
 const catchAsync = require("../utils/catchAsync");
-const { students } = db.models;
+const { tournaments, students } = db.models;
 
 const getStudent = catchAsync(async(req, res) => {
     const data = await students.findAll();
@@ -29,9 +30,30 @@ const deleteStudent = catchAsync(async(req, res) => {
     res.send({message: "deleted"}); 
 });
 
+const registerStudent = catchAsync(async(req, res) => {
+    const {tournament_id, hostel_id, selectedStudents} = req.body;
+    const tournament = await tournaments.findByPk(tournament_id);
+    if(!tournament){
+        res.sendStatus(404);
+        return;
+    }
+    const new_array = selectedStudents.map(roll_nos => {
+        return {roll_no: roll_nos}
+    })
+    const updatedStudents = await students.update(
+        {tournament_id: tournament_id},
+        {
+            where:{
+                [Op.or]: new_array
+            }
+        }
+    )
+    res.send(updatedStudents);
+})
 
 module.exports = {
     getStudent,
     createStudent,
     deleteStudent,
+    registerStudent,
 };
