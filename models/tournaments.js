@@ -18,6 +18,10 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      num_players: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      }
     },
     {
       underscored: true,
