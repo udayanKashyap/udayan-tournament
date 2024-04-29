@@ -43,6 +43,26 @@ const initModels = (sequelize, DataTypes) => {
     through: tournament_participants,
     foreignKey: { allowNull: false, name: "tournament_id" },
   });
+  // realationship between matches and hostels
+  matches.belongsTo(hostels, {
+    foreignKey: { allowNull:true, name: "hostel_id_1"},
+  });
+  hostels.hasMany(matches, {
+    foreignKey: {allowNull: true, name: "hostel_id_1"},
+  });
+  matches.belongsTo(hostels, {
+    foreignKey: { allowNull:true, name: "hostel_id_2"},
+  });
+  hostels.hasMany(matches, {
+    foreignKey: {allowNull: true, name: "hostel_id_2"},
+  });
+  matches.belongsTo(hostels, {
+    foreignKey: { allowNull:true, name: "winner"},
+  });
+  hostels.hasMany(matches, {
+    foreignKey: {allowNull: true, name: "winner"},
+  });
+
   return {
     hostels,
     students,
