@@ -1,9 +1,11 @@
+const { where } = require("sequelize");
 const db = require("../db/db");
 const ApiError = require("../utils/apiError");
 const catchAsync = require("../utils/catchAsync");
 const { hostels } = db.models;
 const jwt = require('jsonwebtoken');
 const { jwt_secret } = require("../utils/config");
+const tournament_participants = require("../models/tournament_participants");
 
 const getHostel = catchAsync(async (_, res) => {
   const data = await hostels.findAll();
@@ -29,7 +31,6 @@ const hostelLogin = catchAsync(async (req, res) => {
   const token = jwt.sign({ name: data.name, id: data.id }, jwt_secret)
   res.send({ token, data: { name: data.name, id: data.id } })
 })
-
 
 module.exports = {
   getHostel,

@@ -28,11 +28,11 @@ const initModels = (sequelize, DataTypes) => {
     foreignKey: { allowNull: false, name: "hostel_id" },
   });
   // relationship between students and tournaments
-  students.belongsTo(tournaments, {
-    foreignKey: { name: "tournament_id" },
+  students.belongsToMany(tournaments, {
+    through: 'student_participants'
   });
-  tournaments.hasMany(students, {
-    foreignKey: { name: "tournament_id" },
+  tournaments.belongsToMany(students, {
+    through: 'student_participants'
   });
   // hostels and tournaments
   hostels.belongsToMany(tournaments, {
@@ -45,22 +45,22 @@ const initModels = (sequelize, DataTypes) => {
   });
   // realationship between matches and hostels
   matches.belongsTo(hostels, {
-    foreignKey: { allowNull:true, name: "hostel_id_1"},
+    foreignKey: { allowNull: true, name: "hostel_id_1" },
   });
   hostels.hasMany(matches, {
-    foreignKey: {allowNull: true, name: "hostel_id_1"},
+    foreignKey: { allowNull: true, name: "hostel_id_1" },
   });
   matches.belongsTo(hostels, {
-    foreignKey: { allowNull:true, name: "hostel_id_2"},
+    foreignKey: { allowNull: true, name: "hostel_id_2" },
   });
   hostels.hasMany(matches, {
-    foreignKey: {allowNull: true, name: "hostel_id_2"},
+    foreignKey: { allowNull: true, name: "hostel_id_2" },
   });
   matches.belongsTo(hostels, {
-    foreignKey: { allowNull:true, name: "winner"},
+    foreignKey: { allowNull: true, name: "winner" },
   });
   hostels.hasMany(matches, {
-    foreignKey: {allowNull: true, name: "winner"},
+    foreignKey: { allowNull: true, name: "winner" },
   });
 
   return {

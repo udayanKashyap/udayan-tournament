@@ -54,19 +54,34 @@ const registerStudent = catchAsync(async (req, res) => {
         res.sendStatus(404);
         return;
     }
-    const new_array = selectedStudents.map(roll_nos => {
-        return { roll_no: roll_nos }
-    })
-    const updatedStudents = await students.update(
-        { tournament_id: tournament_id },
-        {
-            where: {
-                [Op.or]: new_array
+    // const junctionTable = selectedStudents.map(roll_nos => {
+    //     return { student_roll_no: roll_nos, tournament_id: tournament_id }
+    // })
+    console.log(selectedStudents);
+    // const updatedStudents = await students.update(
+    //     { tournament_id: tournament_id },
+    //     {
+    //         where: {
+    //             [Op.or]: new_array
+    //         }
+    //     }
+    // )
+    const StudentInstances = await students.findAll({
+        where: {
+            roll_no: {
+                [Op.or]: selectedStudents
             }
         }
-    )
-    res.send(updatedStudents);
+    })
+    // let data1 = []
+    // StudentInstances.forEach(async (studentInstance) => {
+    //     const data = await studentInstance.addTournament(tournament)
+    //     data1.push(data);
+    // });
+    const data = await tournament.addStudents(StudentInstances);
+    res.status(201).send(data);
 })
+
 
 module.exports = {
     getStudent,
