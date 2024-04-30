@@ -18,10 +18,11 @@ const createTournament = catchAsync(async(req, res) => {
         num_players,
         hostels_participating
     } = req.body;
-    const data1 = await tournaments.create({id, name, start_date, end_date, status, num_players });
+    console.log(req.body);
+    const data1 = await tournaments.create({ id, name, start_date, end_date, status, num_players });
     
     const junctionArray = hostels_participating.map(hostelId => {
-        return {hostel_id:hostelId, tournament_id: id}
+        return {hostel_id:hostelId, tournament_id: data1.id}
     })
     const data2 = await tournament_participants.bulkCreate(junctionArray);
 
