@@ -24,6 +24,7 @@ app.use(cors());
 app.post('/verify', catchAsync((req, res) => {
   const { token } = req.body
   const data = jwt.verify(token, jwt_secret)
+  console.log(data);
   res.send({ ...data })
 }))
 

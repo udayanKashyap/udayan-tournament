@@ -5,7 +5,6 @@ const catchAsync = require("../utils/catchAsync");
 const { hostels } = db.models;
 const jwt = require('jsonwebtoken');
 const { jwt_secret } = require("../utils/config");
-const tournament_participants = require("../models/tournament_participants");
 
 const getHostel = catchAsync(async (_, res) => {
   const data = await hostels.findAll();
@@ -28,8 +27,11 @@ const hostelLogin = catchAsync(async (req, res) => {
   if (!data) {
     throw new ApiError(404, "Hostel not found")
   }
-  const token = jwt.sign({ name: data.name, id: data.id }, jwt_secret)
-  res.send({ token, data: { name: data.name, id: data.id } })
+  const token = jwt.sign({ userType: "hostelAdmin", name: data.name, id: data.id }, jwt_secret)
+  res.send({
+    token,
+    data: { userType: "hostelAdmin", name: data.name, id: data.id }
+  })
 })
 
 module.exports = {

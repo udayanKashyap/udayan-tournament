@@ -1,6 +1,6 @@
 const { jwt_secret } = require("../utils/config");
 const db = require('../db/db')
-const { hostels } = db.models
+const { hostels, admins } = db.models
 const ApiError = require(".././utils/apiError")
 const jwt = require("jsonwebtoken")
 
@@ -32,4 +32,26 @@ const hostelUserAuth = async (req, res, next) => {
     }
 };
 
-module.exports = hostelUserAuth
+const adminUserAuth = async (req, res, next) => {
+    try {
+        const token = extractToken(req)
+        if (!token) {
+            res.status(403).send({ message: "Token not found" })
+            return
+        }
+        const decoded_data = jwt.verify(token, jwt_secret);
+        const admin = await admins.findOne({ where: { username: decoded_data.username, password: decoded_data.password } });
+        if (!admin) {
+            res.status(403).send({ message: "Payload invalid" });
+            return;
+        }
+        next();
+    } catch (error) {
+        res.status(403).send({ message: error.message });
+    }
+}
+
+module.exports = {
+    hostelUserAuth,
+    adminUserAuth,
+}
