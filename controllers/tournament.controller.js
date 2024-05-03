@@ -55,10 +55,16 @@ const getTournamentsOfHostel = catchAsync(async (req, res) => {
     res.status(201).send(myTournaments);
 })
 
+const getTournamentParticipants = catchAsync(async (req, res) => {
+    let data = await tournament_participants.findAll();
+    res.send(data);
+})
+
 module.exports = {
     getTournaments,
     createTournament,
     getTournamentsOfHostel,
+    getTournamentParticipants
 };
 
 /* NOTE
