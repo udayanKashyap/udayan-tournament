@@ -12,6 +12,7 @@ app.use(
   }),
 );
 app.use(cors());
+console.log(name);
 //routes
 app.use("/hostel", hostelRouter);
 //error handler
